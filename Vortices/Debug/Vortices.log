@@ -1,0 +1,8 @@
+﻿  main.cpp
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp__glutInitWindowSize@8 в функции _main
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp__glutInitDisplayMode@4 в функции _main
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp__glutMainLoop@0 в функции _main
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp____glutInitWithExit@12 в функции _glutInit_ATEXIT_HACK@8
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp____glutCreateWindowWithExit@8 в функции _glutCreateWindow_ATEXIT_HACK@4
+C:\OpenGL\Libs\freeglut.lib : warning LNK4272: тип компьютера библиотеки "x64" конфликтует с типом целевого компьютера "x86"
+C:\Users\Ann\source\repos\Vortices\Vortices\Debug\Vortices.exe : fatal error LNK1120: неразрешенных внешних элементов: 5
