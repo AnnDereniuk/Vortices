@@ -2,46 +2,46 @@
 #include<math.h>
 #define pi 3.14159265359
 #define e 2.71828182846
-
+#define vectorScale 0.08
 const int n = 9;
 
 double midpointX[n];	//midpoints between vortices
 double midpointY[n]; 
 
-double normXarr[n-1];	//pre-normalized vectors
-double normYarr[n-1];
+double normXarr[n];	//pre-normalized vectors
+double normYarr[n];
 
-double tmp[n - 1]; //for getting normalized vectors
+double tmp[n]; //for getting normalized vectors
 
 double vortXarr[]{ 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., };		//vortices coordinates
 double vortYarr[]{ -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5 };
 
-void midpoints() 
+double denominator(double x[], double y[], int i) {
+	return sqrt(pow((x[i + 1] - x[i]), 2) + pow((y[i + 1] - y[i]), 2));
+}
+
+void midpoints(double x[], double y[]) 
 {
 	for (int i = 0; i < n; i++)
 	{
-		midpointX[i] = (vortXarr[i]+vortXarr[i+1]) / 2.;	
-		midpointY[i] = (vortYarr[i]+vortYarr[i+1]) / 2.;	// y_k=(y_0k+y_ok+1)/2
+		midpointX[i] = (x[i+1] + x[i]) / 2.;
+		midpointY[i] = (y[i + 1] + y[i]) / 2.;
 	}
 }
 
-void normCoords() 
+void normCoords(double x[], double y[])
 {
-	for (int i = 0; i < n-1; i++){	//tau_k=((x_k+1-x_k),(y_k+1-y_k))/(sqrt((x_k+1-x_k)^2+(y_k+1-y_k)^2)
-		normXarr[i] = (vortXarr[i + 1] - vortXarr[i]) / sqrt(pow((vortXarr[i + 1] - vortXarr[i]), 2) + pow((vortYarr[i + 1] - vortYarr[i]), 2));
-		normYarr[i] = (vortYarr[i + 1] - vortYarr[i]) / sqrt(pow((vortXarr[i + 1] - vortXarr[i]), 2) + pow((vortYarr[i + 1] - vortYarr[i]), 2));
+	for (int i = 0; i < n; i++){	//tau_k=((x_k+1-x_k),(y_k+1-y_k))/(sqrt((x_k+1-x_k)^2+(y_k+1-y_k)^2)
+		normXarr[i] = (x[i + 1] - x[i]) / denominator(x,y,i);
+		normYarr[i] = (y[i + 1] - y[i]) / denominator(x, y, i);
 	}
-	for (int i = 0; i < n - 1; i++)	 //	tau(x,y); n(x,y)=tau(-y,x)
+	for (int i = 0; i < n; i++)	 //	tau(x,y); n(x,y)=tau(-y,x)
 	{
 		tmp[i] = normXarr[i];
 		normXarr[i] = -normYarr[i];
 		normYarr[i] = tmp[i];
 	}
 }
-
-
-
-
 
 void Reshape(int width, int height)
 {
@@ -68,7 +68,7 @@ void Draw(void)
 	glColor3d(1.0, 0.0, 0.0);
 	glPointSize(3.f);
 	glBegin(GL_POINTS);
-	for (int i = 0; i <n;i++) {
+	for (int i = 0; i <=n;i++) {
 		glVertex2d(vortXarr[i], vortYarr[i]);
 	}
 	glEnd();
@@ -76,11 +76,11 @@ void Draw(void)
 	glColor3d(0.0, 1.0, 0.0);
 	glPointSize(3.f);
 	glBegin(GL_LINES);
-	midpoints();
-	normCoords();
-	for (int i = 0; i <n;i++) {
+	midpoints(vortXarr,vortYarr);
+	normCoords(vortXarr,vortYarr);
+	for (int i = 0; i < n;i++) {
 		glVertex2d(midpointX[i], midpointY[i]);
-		glVertex2d(midpointX[i]+normXarr[i],midpointY[i]+normYarr[i]);
+		glVertex2d(midpointX[i] + vectorScale*normXarr[i], midpointY[i] + normYarr[i]);
 	}
 	glEnd();
 
