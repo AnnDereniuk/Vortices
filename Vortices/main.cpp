@@ -1,6 +1,6 @@
 #include<GL/freeglut.h>
 #include<math.h>
-#include <iostream>
+#include<iostream>
 #define pi 3.14159265359
 #define e 2.71828182846
 #define vectorScale 0.08
@@ -266,7 +266,7 @@ void Draw(void)
 	glColor3d(0.0, 1.0, 0.0);
 	glPointSize(3.f);
 	glBegin(GL_LINES);
-	int width = 0.2;
+	double width = 0.2;
 	double xi = 0.2, yi = 0.2;
 	for (int fstep = 0; fstep < m; fstep++)
 	{
