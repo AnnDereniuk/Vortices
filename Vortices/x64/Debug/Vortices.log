@@ -1,2 +1,3 @@
 ﻿  main.cpp
+c:\users\ann\source\repos\vortices\vortices\main.cpp(269): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
   Vortices.vcxproj -> C:\Users\Ann\source\repos\Vortices\Vortices\x64\Debug\Vortices.exe
